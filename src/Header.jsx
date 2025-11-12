@@ -3,14 +3,23 @@ import { Link } from 'react-router'
 export default function Header() {
     return (<>
       <header>
-        <h1>Franze Pintal's Freaky Panda | ITIS 3135</h1>
-        <nav>
-            
-        <Link to="/">Home</Link> |{' '}
-        <Link to="/introduction">Introduction</Link> |{' '}
-        <Link to="/contract">Contract</Link>
+      <nav>
+      <h1>Franze Pintal's Freaky Panda | ITIS 3135</h1> 
+      <a href="https://webpages.charlotte.edu/fpintal/">Personal Homepage</a> |
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/z_archives/index.html">Course Page</a> |
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/fproductionz.com/">Design Firm</a> |
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/website_evaluations.html">Website Evaluations</a> |
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/intro_form.html">Introduction Form</a>
+    </nav>
 
-        </nav>
+
+    <nav>
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/freakypanda/">Company Site</a> |
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/stuff/CraaPy%20PAGE%20lol%20%25.htm">CRAP Website</a> |
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/fccfsjs_outline.html">FCC Outline</a> | 
+      <a href="https://webpages.charlotte.edu/fpintal/itis3135/hobby/#what">Hobby</a> |
+      <a href="https://itis3135-react-cdrv3v5z9-franze-pintals-projects.vercel.app"> React3</a>
+    </nav>
       </header>
       </>);
   }

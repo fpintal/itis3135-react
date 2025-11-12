@@ -5,6 +5,8 @@ import Home from './App.jsx'
 import Introduction from './Introduction.jsx'
 import Contract from './Contract.jsx'
 import Layout from './Layout.jsx'
+import Header from './Header.jsx'
+import Footer from './Footer.jsx'
 import { BrowserRouter, Routes, Route } from 'react-router'
 
 createRoot(document.getElementById('root')).render(

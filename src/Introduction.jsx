@@ -1,12 +1,26 @@
 import profilePic from './assets/franze-profilepic.png'
+import { Link } from 'react-router'
+import './App.css'
+import Header from './Header'
+import Footer from './Footer'
 
 export default function Introduction() {
     return (
       <>
         <Header></Header>
+
+        <nav>        
+            <Link to="/">Home</Link> |{' '}
+            <Link to="/introduction">Introduction</Link> |{' '}
+            <Link to="/contract">Contract</Link>
+        </nav>
+
+
+        <main>
         <h2>Introduction</h2>
 
-        <img src="{profilePic}" alt="Picture of Franze Pintal"></img>
+        <img src={profilePic} alt="Picture of me" class="profile-pic"/>
+        <figcaption>Franze Pintal</figcaption>
   
         <section>
           <h3>Personal Background</h3>
@@ -49,6 +63,9 @@ export default function Introduction() {
             <li>ITSC 3155 — Introduction to Software Engineering — Required course</li>
           </ul>
         </section>
+        </main>
+
+        <Footer></Footer>
       </>
     );
   }
