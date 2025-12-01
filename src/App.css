@@ -218,3 +218,62 @@ clip: rect(0, 0, 0, 0);
 white-space: nowrap;
 border: 0;
 }
+
+/* Students list styles */
+.students-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.student-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.85rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,250,250,0.6));
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.student-pic {
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  min-height: 120px;
+  max-height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex: 0 0 120px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: block;
+}
+.student-pic.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  color: #777;
+  width: 120px;
+  height: 120px;
+  min-width: 120px;
+  min-height: 120px;
+}
+
+.student-body { min-width: 0; }
+.student-header { display: flex; gap: 0.5rem; align-items: baseline; }
+.mascot { font-size: 0.9rem; color: #406; background: #eef; padding: 0.15rem 0.5rem; border-radius: 6px; }
+.personal-statement { margin: 0.5rem 0; }
+.quick-facts ul { margin: 0.25rem 0 0; padding-left: 1rem; }
+.courses ul { margin: 0.25rem 0 0; padding-left: 1.25rem; }
+.links-row { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.links-row a { padding: 0.25rem 0.5rem; background: #f7f7f7; border-radius: 6px; border: 1px solid rgba(0,0,0,0.06); }
+blockquote { margin: 0.6rem 0; padding-left: 0.8rem; border-left: 3px solid rgba(0,0,0,0.08); color: #333; }
+
+@media screen and (max-width: 600px) {
+  .student-card { flex-direction: column; align-items: center; text-align: left; }
+  .student-pic { width: 92px; height: 92px; min-width:92px; min-height:92px; max-width:92px; max-height:92px; flex: 0 0 92px; }
+  .student-pic.placeholder { width:92px; height:92px; min-width:92px; min-height:92px; }
+}
