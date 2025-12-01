@@ -12,7 +12,8 @@ export default function Introduction() {
         <nav>        
             <Link to="/">Home</Link> |{' '}
             <Link to="/introduction">Introduction</Link> |{' '}
-            <Link to="/contract">Contract</Link>
+            <Link to="/contract">Contract</Link> |{' '}
+            <Link to="/students">Students (JSON)</Link>
         </nav>
 
 

@@ -1,5 +1,6 @@
 import Header from './Header'
 import Footer from './Footer'
+import { Link } from 'react-router'
 
 export default function Contract() {
     return (
@@ -8,9 +9,10 @@ export default function Contract() {
       <Header></Header>
       
       <nav>        
-            <Link to="/">Home</Link> |{' '}
-            <Link to="/introduction">Introduction</Link> |{' '}
-            <Link to="/contract">Contract</Link>
+        <Link to="/">Home</Link> |{' '}
+        <Link to="/introduction">Introduction</Link> |{' '}
+        <Link to="/contract">Contract</Link> |{' '}
+        <Link to="/students">Students (JSON)</Link>
       </nav>
 
       <main>
