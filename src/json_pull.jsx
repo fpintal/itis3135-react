@@ -1,84 +1,83 @@
-import React, { useEffect, useState } from 'react'
-import './App.css'
-import Header from './Header'
-import Footer from './Footer'
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import Header from './Header';
+import Footer from './Footer';
 
-const API_URL = 'https://dvonb.xyz/api/2025-fall/itis-3135/students?full=1'
+const API_URL = 'https://dvonb.xyz/api/2025-fall/itis-3135/students?full=1';
 
-function StudentCard({ student }) {
-
+function StudentCard({ student, filters }) {
   // Build readable full name
-  const nameObj = student.name || {}
+  const nameObj = student.name || {};
   const fullName =
     `${nameObj.first || ''} ${nameObj.middleInitial || ''} ${nameObj.last || ''}`
       .replace(/\s+/g, ' ')
-      .trim() || student.fullname || student.displayName || student.title || 'Unnamed'
+      .trim() || student.fullname || student.displayName || student.title || 'Unnamed';
 
   // Mascot
-  const mascot = student.mascot || student.teamMascot || student.nickname || ''
+  const mascot = student.mascot || student.teamMascot || student.nickname || '';
 
   // Image (optional)
-  const rawImg = student.media?.src || student.image || student.photo || null
-  const imgUrl = rawImg ? (rawImg.startsWith('http') ? rawImg : `https://dvonb.xyz${rawImg}`) : null
+  const rawImg = student.media?.src || student.image || student.photo || null;
+  const imgUrl = rawImg ? (rawImg.startsWith('http') ? rawImg : `https://dvonb.xyz${rawImg}`) : null;
 
   // Personal statement
-  const personal = student.personalStatement || student.statement || student.introduction || student.bio || ''
+  const personal = student.personalStatement || student.statement || student.introduction || student.bio || '';
 
   // Quick facts: prefix, platform/device+os, funFact
-  const prefix = student.prefix || student.title || ''
-  let platformText = ''
+  const prefix = student.prefix || student.title || '';
+  let platformText = '';
   if (student.platform) {
-    if (typeof student.platform === 'string') platformText = student.platform
-    else platformText = `${student.platform.device || student.platform.name || ''} ${student.platform.os || student.platform.version || ''}`.trim()
+    if (typeof student.platform === 'string') platformText = student.platform;
+    else platformText = `${student.platform.device || student.platform.name || ''} ${student.platform.os || student.platform.version || ''}`.trim();
   } else {
-    platformText = `${student.device || ''} ${student.os || ''}`.trim()
+    platformText = `${student.device || ''} ${student.os || ''}`.trim();
   }
-  const funFact = student.funFact || student.fun_fact || student.interestingFact || ''
+  const funFact = student.funFact || student.fun_fact || student.interestingFact || '';
 
   // Courses (array)
-  const courses = student.courses || student.courseList || student.classes || []
+  const courses = student.courses || student.courseList || student.classes || [];
 
   // Quote
-  const quoteText = student.quote?.text || student.quoteText || student.quote || ''
-  const quoteAuthor = student.quote?.author || student.quoteAuthor || student.quoteBy || ''
+  const quoteText = student.quote?.text || student.quoteText || student.quote || '';
+  const quoteAuthor = student.quote?.author || student.quoteAuthor || student.quoteBy || '';
 
   // Links
-  const links = Array.isArray(student.links) ? student.links : []
+  const links = Array.isArray(student.links) ? student.links : [];
   const renderLink = (l, i) => {
-    if (!l) return null
-    if (typeof l === 'string') return <a key={i} href={l} target="_blank" rel="noreferrer">Link</a>
-    const href = l.url || l.href || l.link || l.address || l.path
-    const label = l.label || l.title || l.name || l.text || href
-    if (!href) return null
-    return <a key={i} href={href} target="_blank" rel="noreferrer">{label}</a>
-  }
+    if (!l) return null;
+    if (typeof l === 'string') return <a key={i} href={l} target="_blank" rel="noreferrer">Link</a>;
+    const href = l.url || l.href || l.link || l.address || l.path;
+    const label = l.label || l.title || l.name || l.text || href;
+    if (!href) return null;
+    return <a key={i} href={href} target="_blank" rel="noreferrer">{label}</a>;
+  };
 
   return (
     <article className="student-card">
-      {imgUrl ? (
+      {filters.image && (imgUrl ? (
         <img src={imgUrl} alt={fullName} className="student-pic" />
       ) : (
         <div className="student-pic placeholder">No image</div>
-      )}
+      ))}
 
       <div className="student-body">
         <div className="student-header">
-          <h3>{fullName}</h3>
-          {mascot && <span className="mascot">{mascot}</span>}
+          {filters.name && <h3>{fullName}</h3>}
+          {filters.mascot && mascot && <span className="mascot">{mascot}</span>}
         </div>
 
-        {personal && <p className="personal-statement">{personal}</p>}
+        {filters.personalStatement && personal && <p className="personal-statement">{personal}</p>}
 
         <div className="quick-facts">
           <h4>Quick Facts</h4>
           <ul>
-            {prefix && <li><strong>Prefix:</strong> {prefix}</li>}
-            {platformText && <li><strong>Platform:</strong> {platformText}</li>}
-            {funFact && <li><strong>Fun Fact:</strong> {funFact}</li>}
+            {filters.extraInfo && prefix && <li><strong>Prefix:</strong> {prefix}</li>}
+            {filters.extraInfo && platformText && <li><strong>Platform:</strong> {platformText}</li>}
+            {filters.extraInfo && funFact && <li><strong>Fun Fact:</strong> {funFact}</li>}
           </ul>
         </div>
 
-        {courses && courses.length > 0 && (
+        {filters.classes && courses && courses.length > 0 && (
           <div className="courses">
             <h4>Courses</h4>
             <ul>
@@ -87,14 +86,14 @@ function StudentCard({ student }) {
           </div>
         )}
 
-        {quoteText && (
+        {filters.quote && quoteText && (
           <blockquote>
             <p>{quoteText}</p>
             {quoteAuthor && <cite>— {quoteAuthor}</cite>}
           </blockquote>
         )}
 
-        {links && links.length > 0 && (
+        {filters.links && links && links.length > 0 && (
           <div className="links-row">
             {links.map((l, i) => (
               <span key={i} className="link-item">{renderLink(l, i)}</span>
@@ -103,13 +102,26 @@ function StudentCard({ student }) {
         )}
       </div>
     </article>
-  )
+  );
 }
 
 export default function JsonPull() {
-  const [students, setStudents] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filters, setFilters] = useState({
+    name: true,
+    mascot: true,
+    image: true,
+    personalStatement: true,
+    backgrounds: true,
+    classes: true,
+    extraInfo: true,
+    quote: true,
+    links: true,
+  });
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     let cancelled = false
@@ -139,26 +151,82 @@ export default function JsonPull() {
     }
   }, [])
 
+  const filteredStudents = students.filter((student) => {
+    const nameObj = student.name || {};
+    const fullName = `${nameObj.first || ''} ${nameObj.middleInitial || ''} ${nameObj.last || ''}`
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+    return fullName.includes(searchTerm.toLowerCase());
+  });
+
+  const handleFilterChange = (field) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [field]: !prevFilters[field],
+    }));
+  };
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % filteredStudents.length);
+  };
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + filteredStudents.length) % filteredStudents.length);
+  };
+
   return (
     <main>
       <Header />
 
       <h2>Students — JSON Pull</h2>
 
+      <div className="controls">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <div className="filters">
+          {Object.keys(filters).map((filter) => (
+            <label key={filter}>
+              <input
+                type="checkbox"
+                checked={filters[filter]}
+                onChange={() => handleFilterChange(filter)}
+              />
+              {filter.charAt(0).toUpperCase() + filter.slice(1)}
+            </label>
+          ))}
+        </div>
+      </div>
+
       {loading && <p>Loading students…</p>}
       {error && <p className="error">Error: {error}</p>}
 
       {!loading && !error && (
-        <section className="students-grid">
-          <p>{students.length} students returned</p>
+        <section>
+          <p>{filteredStudents.length} students found</p>
 
-          {students.map((s, i) => (
-            <StudentCard key={s.prefix || s.email || i} student={s} />
-          ))}
+          {filteredStudents.length > 0 && (
+            <div className="slideshow">
+              <button onClick={handlePrevSlide}>Previous</button>
+              <StudentCard student={filteredStudents[currentSlide]} filters={filters} />
+              <button onClick={handleNextSlide}>Next</button>
+            </div>
+          )}
+
+          <div className="students-grid">
+            {filteredStudents.map((s, i) => (
+              <StudentCard key={s.prefix || s.email || i} student={s} filters={filters} />
+            ))}
+          </div>
         </section>
       )}
 
       <Footer />
     </main>
-  )
+  );
 }
